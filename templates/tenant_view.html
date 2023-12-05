@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tenant Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #87CEEB; /* Light sky blue */
+            color: black; /* Set text color to black */
+            text-align: center; /* Center aligning content */
+        }
+
+        header h1 {
+            color: black; /* Set the title color to black */
+        }
+
+        header .navbar {
+            background-color: #87CEEB !important; /* Sky blue for the navbar, using !important to override Bootstrap styles */
+            text-align: left; /* Align the navbar content to the left */
+        }
+
+        header .navbar .nav-link {
+            color: black; /* Set navbar link color to black */
+            font-size: 1.5em; /* Larger text for Home link */
+        }
+
+        .btn-custom {
+            background-color: #0d0d0d; /* Darker black for buttons */
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-custom:hover {
+            background-color: #262626; /* Slightly lighter black on hover */
+        }
+
+        table {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid #0d0d0d;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer {
+            margin-top: 20px;
+            color: black; /* Set footer text color to black */
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<header class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="navbar-nav">
+            <a href="{% url 'maintenance_app:homepage' %}" class="nav-item nav-link">Home</a>
+        </div>
+
+    </nav>
+    <h1>Tenant Dashboard</h1>
+</header>
+<main class="container">
+    <form method="get" action="{% url 'maintenance_app:tenant_view' %}">
+        <input type="text" name="apartment_number" placeholder="Apartment Number" required>
+        <button type="submit" class="btn btn-custom">Submit</button>
+    </form>
+    <br><br><br><br><br>
+    {% if tenant_id %}
+        <h2>Submit a Maintenance Request</h2>
+        <form method="post" enctype="multipart/form-data" class="mt-4">
+            {% csrf_token %}
+            {{ form.errors }}  <!-- Display form errors here -->
+            <div class="form-group">
+                <label for="problemArea">Problem Area</label>
+                <input type="text" class="form-control" id="problemArea" name="problem_area"
+                       placeholder="Enter the problem area" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4"
+                          placeholder="Enter a detailed description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="file">Attach a Photo (Optional)</label>
+                <input type="file" class="form-control-file" id="file" name="photo">
+            </div>
+            <button type="submit" class="btn btn-custom">Submit Request</button>
+        </form><br><br><br><br>
+
+        <h2>Your Maintenance Requests</h2>
+        <table class="table table-bordered table-responsive-md">
+            <tr>
+                <th>Request ID</th>
+                <th>Date</th>
+                <th>Problem Area</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+            {% for request in requests %}
+                <tr>
+                    <td>{{ request.request_id }}</td>
+                    <td>{{ request.request_date }}</td>
+                    <td>{{ request.problem_area }}</td>
+                    <td>{{ request.description }}</td>
+                    <td>{{ request.status }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No requests found for this apartment number.</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</main>
+<footer>
+    <p>&copy; 2023 Maintenance Management System</p>
+</footer>
+
+<!-- Bootstrap JS and its dependencies (Optional if you need interactive components) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
