@@ -1,0 +1,26 @@
+Preprocessing
+Auto-Orient: Applied
+Resize: Stretch to 640x640
+Augmentations
+Outputs per training example: 3
+Bounding Box: Flip: Horizontal
+
+@misc{
+detect-faces-model-btxlr_dataset,
+title = { Detect Faces Model Dataset },
+type = { Open Source Dataset },
+author = { Hwng },
+howpublished = { \url{ https://universe.roboflow.com/hwng-ix8nt/detect-faces-model-btxlr } },
+url = { https://universe.roboflow.com/hwng-ix8nt/detect-faces-model-btxlr },
+journal = { Roboflow Universe },
+publisher = { Roboflow },
+year = { 2024 },
+month = { mar },
+note = { visited on 2024-04-19 },
+}
+
+Validating runs/detect/train4/weights/best.pt...
+Ultralytics YOLOv8.2.2 🚀 Python-3.10.12 torch-2.2.1+cu121 CUDA:0 (Tesla V100-SXM2-16GB, 16151MiB)
+Model summary (fused): 218 layers, 25840339 parameters, 0 gradients, 78.7 GFLOPs
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% 7/7 [00:05<00:00,  1.17it/s]
+                   all        216        425      0.942      0.881      0.934      0.802
